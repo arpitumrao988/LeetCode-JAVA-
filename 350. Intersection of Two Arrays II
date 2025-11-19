@@ -1,0 +1,65 @@
+class Solution {
+    public int[] intersect(int[] nums1, int[] nums2) {     
+        ArrayList<Integer> arr2=new ArrayList<>();
+        int max=0;
+        for(int i=0;i<nums1.length;i++)
+        {
+            if(nums1[i]>max)
+            {
+                max=nums1[i];
+            }
+        }
+        int[] arr=new int[max+1];
+        for(int i=0;i<nums1.length;i++)
+        { 
+            arr[nums1[i]]++;
+        }
+        for(int i=0;i<nums2.length;i++)
+        {
+            if(nums2[i]<=max && arr[nums2[i]]>0 )
+            {
+                arr2.add(nums2[i]);
+                arr[nums2[i]]--;
+            }
+        }
+        int [] result=new int[arr2.size()];
+        for(int i=0;i<arr2.size();i++)
+        {
+            result[i]=arr2.get(i);
+        }
+        return result;
+    }
+}
+//another solution
+class Solution {
+    public int[] intersect(int[] nums1, int[] nums2) {
+     int start1=0;
+     int start2=0;
+     ArrayList<Integer> arr =new ArrayList<>();
+     Arrays.sort(nums1);
+     Arrays.sort(nums2);
+     while(start1<nums1.length && start2<nums2.length)
+     {
+        if(nums1[start1]< nums2[start2])
+        {
+            start1++;
+        }
+        else if( nums1[start1]> nums2[start2])
+        {
+            start2++;
+        }
+        else{
+            arr.add(nums1[start1]);
+            start1++;
+            start2++;
+        }
+     }
+     int[] result=new int[arr.size()];
+        for(int i=0;i<arr.size();i++)
+        {
+            result[i]=arr.get(i);
+        }
+        return result;
+    }
+    
+}
