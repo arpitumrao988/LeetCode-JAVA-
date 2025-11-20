@@ -1,0 +1,69 @@
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        if(nums.length<2){
+            if(nums.length==0){
+                return new int[] {-1,-1};
+            }
+            if(nums.length==1 && nums[0]==target)
+            {
+                return new int[] {0,0};
+            }
+            else{
+                return new int[]{-1,-1};
+            }
+        }
+           return new int[] {firstSearch(nums,target),lastSearch(nums,target)};  
+    }
+     public static int firstSearch(int[] arr,int target)
+    {
+        int ans=0;
+        int start=0;
+        int end=arr.length-1;
+        while(start<=end)
+        {
+            int mid=start+(end-start)/2;
+            if(arr[mid]==target)
+            {
+                ans=mid;
+            }
+             if(target>arr[mid])
+            {
+                start=mid+1;
+            }
+            else{
+                end=mid-1;
+            }
+        }
+        if(arr[ans]==target)
+        return ans;
+        else{
+            return -1;
+        }
+    }
+    public static int lastSearch(int[] arr,int target)
+    {
+        int ans=0;
+        int start=0;
+        int end=arr.length-1;
+        while(start<=end)
+        {
+            int mid=start+(end-start)/2;
+            if(arr[mid]==target)
+            {
+                ans=mid;
+            }
+           if(target>=arr[mid])
+            {
+                start=mid+1;
+            }
+            else{
+                end=mid-1;
+            }
+        }
+        if(arr[ans]==target)
+        return ans;
+        else{
+            return -1;
+        }
+    }
+}
