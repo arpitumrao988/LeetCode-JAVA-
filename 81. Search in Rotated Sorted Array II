@@ -1,0 +1,41 @@
+class Solution {
+    public boolean search(int[] arr, int target) {
+        int start=0;
+        int end=arr.length-1;
+        while(start<=end)
+        {
+            int mid=start+(end-start)/2;
+            if(arr[mid]==target)
+            {
+                return true;
+            }
+            //same as searching in rotated sorted(dintinct) array but we check if arr[mid]=arr[end]=arr[start] => then we 
+            //increase our pointer because this case is not deceiding ,in which side we are in array! 
+            if(arr[mid]==arr[start] && arr[mid]==arr[end] && arr.length>1)
+             {
+                start++;
+                end--;
+                continue;
+             }
+            if( arr[mid]>=arr[start]){//left side array
+                if(target<arr[mid] && target>=arr[start])
+                {
+                    end=mid-1;
+                }
+                else {
+                    start=mid+1;
+                }
+            }
+            else{//right side
+                if(target>arr[mid] && target<arr[start])
+                {
+                    start=mid+1;
+                }
+                else{
+                    end=mid-1;
+                }
+            }
+        }
+        return false;
+    }
+}
