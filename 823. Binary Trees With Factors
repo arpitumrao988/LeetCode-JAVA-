@@ -1,0 +1,35 @@
+import java.util.*;
+
+class Solution {
+    public int numFactoredBinaryTrees(int[] arr) {
+        Arrays.sort(arr);
+        HashMap<Integer, Long> map = new HashMap<>();
+        long MOD = 1_000_000_007;
+
+        // Step 1: Each number alone forms one tree
+        for (int num : arr) {
+            map.put(num, 1L);
+        }
+
+        // Step 2: Build trees using factors
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (arr[i] % arr[j] == 0) {
+                    int right = arr[i] / arr[j];
+                    if (map.containsKey(right)) {
+                        long count = (map.get(arr[j]) * map.get(right)) % MOD;
+                        map.put(arr[i], (map.get(arr[i]) + count) % MOD);
+                    }
+                }
+            }
+        }
+
+        // Step 3: Sum all tree counts
+        long sum = 0;
+        for (long val : map.values()) {
+            sum = (sum + val) % MOD;
+        }
+
+        return (int) sum;
+    }
+}
