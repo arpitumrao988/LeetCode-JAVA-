@@ -1,0 +1,41 @@
+//brute force O(n^2)
+class Solution1 {
+    public int maxSubArray(int[] nums) {
+       int currentSum = 0;
+       int maxSum = Integer.MIN_VALUE;
+        for(int i =0;i<nums.length;i++)
+        {
+            int k =i;
+            currentSum = 0;
+            while(k>=0)
+            {
+                currentSum +=nums[k];
+                k--;
+                if(maxSum<currentSum)
+                {
+                    maxSum = currentSum;
+                }
+            }
+       return maxSum;
+    }
+}
+//kadane algo O(n)
+class Solution {
+    public int maxSubArray(int[] nums) {
+       int currentSum = 0;
+       int maxSum = Integer.MIN_VALUE;
+       for(int i = 0;i<nums.length;i++)
+       {
+        currentSum += nums[i];
+        if(maxSum<currentSum)
+        {
+            maxSum = currentSum;
+        }
+        if(currentSum<0)
+        {
+            currentSum =0;
+        }
+       }
+       return maxSum;
+    }
+}
