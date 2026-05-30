@@ -1,0 +1,54 @@
+//brute force O(n^2)
+class Solution1 {
+    public boolean checkSubarraySum(int[] nums, int k) {
+        int currentSum = 0;
+        int startIndex = 0;
+        for(int i =1;i<nums.length;i++)
+        {
+            currentSum = nums[i];
+            startIndex = i-1;
+            while(startIndex>=0)
+            {
+                currentSum+=nums[startIndex];
+                if(currentSum%k==0)
+                {
+                    System.out.println(currentSum);
+                    return true;
+                }
+                startIndex--;
+            }
+        }
+        return false;
+    }
+}
+//O(n)  using prefixsum + hashmap
+class Solution2 {
+    public boolean checkSubarraySum(int[] nums, int k) {
+                Map<Integer,Integer> mp = new HashMap<>();
+
+mp.put(0,-1);
+
+int prefixSum = 0;
+
+for(int i=0;i<nums.length;i++)
+{
+    prefixSum += nums[i];
+
+    int rem = prefixSum % k;
+
+    if(mp.containsKey(rem))
+    {
+        if(i - mp.get(rem) >= 2)
+        {
+            return true;
+        }
+    }
+    else
+    {
+        mp.put(rem,i);
+    }
+}
+
+return false;
+            }
+}
