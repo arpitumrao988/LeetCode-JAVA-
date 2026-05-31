@@ -1,0 +1,46 @@
+//TimeComplexity O(n) 
+//SpaceComplexity O(n)
+class Solution1 {
+    public boolean isPalindrome(int x) {
+        String s  = Integer.toString(x);
+        int start =0;
+        int end = s.length()-1;
+        boolean flag = true;
+        while(start<=end)
+        {
+            if(s.charAt(start)!=s.charAt(end))
+            {
+                flag = false;
+                break;
+            }
+            start++;
+            end--;
+        }
+        if(flag)
+        {
+            return true;
+        }
+        else{
+            return false;
+        }
+        
+    }
+}
+
+//TimeComplexity O(n) 
+//SpaceComplexity O(1)
+class Solution {
+    public boolean isPalindrome(int x) {
+        if(x<0 ||(x%10==0 && x!=0)){
+            return false;
+        }
+        int halfReversed =0;
+        while(x>halfReversed)
+        {
+            halfReversed=(halfReversed*10)+x%10;
+            x=x/10; 
+        }
+        return x==halfReversed || x==halfReversed/10;
+        
+    }
+}
