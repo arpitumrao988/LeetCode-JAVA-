@@ -1,0 +1,29 @@
+//O(n) reversal algorithm
+class Solution {
+    public void  reverse(int[] arr, int left, int right)
+    {
+        while(left<right)
+        {
+            int temp = arr[left];
+            arr[left] = arr[right];
+            arr[right] = temp;
+            left++;
+            right--;
+        }
+    }
+    public void rotate(int[] nums, int k) {
+        //handle if k is greater than nums length
+        if(k>nums.length){
+            k = k%nums.length;
+        }
+        //rigth rotation by k
+        Solution obj1 = new Solution();
+        //reverse whole array
+        obj1.reverse(nums, 0, nums.length-1);
+        //reverse first k
+        obj1.reverse(nums,0,k-1);
+        //revese remaining 
+        obj1.reverse(nums,k,nums.length-1);
+        
+    }
+}
