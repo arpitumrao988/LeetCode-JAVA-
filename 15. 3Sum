@@ -1,0 +1,33 @@
+//using extra space
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        int n = nums.length;
+       Arrays.sort(nums);
+       Map<Integer,Integer> mp = new HashMap<>();
+        Set<List<Integer>> set = new HashSet<>();
+        if(n<3)
+        {
+            return new ArrayList<>();
+        } 
+        if(nums[0]>0){
+            return new ArrayList<>();
+        }
+        for(int i =0;i<n;i++)
+        {
+            mp.put(nums[i],i);
+        }
+        for(int i =0;i<n-2;i++)
+        {
+            for(int j = i+1;j<n-1;j++)
+            {
+                int required = -1*(nums[i]+nums[j]);
+                if(mp.containsKey(required) && mp.get(required)>j)
+                {
+                    set.add( Arrays.asList(nums[i],nums[j],required));
+                }
+            }
+        }
+        return new ArrayList<>(set);
+
+    }
+}
