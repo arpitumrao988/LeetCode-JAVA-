@@ -1,0 +1,24 @@
+//O(n)
+class Solution {
+    public int[] leftRightDifference(int[] nums) {
+        int n = nums.length;
+        int[] leftSum = new int[n];
+        leftSum[0] = nums[0];
+        int[] rightSum = new int[n];
+        rightSum[n-1] = nums[n-1];
+        int[] result = new int[n];
+        for(int i =1;i<n;i++)
+        {
+            leftSum[i] = leftSum[i-1]+nums[i];
+            rightSum[n-i-1] = rightSum[n-i] + nums[n-1-i];
+        }
+        for(int i =0;i<n;i++)
+        {
+            leftSum[i] = leftSum[i] - nums[i];
+            rightSum[i] = rightSum[i] - nums[i];
+            result[i] = Math.abs(leftSum[i]-rightSum[i]);
+
+        }
+        return result;
+    }
+}
