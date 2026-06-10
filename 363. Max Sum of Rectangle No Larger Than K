@@ -1,0 +1,105 @@
+class Solution1 {
+    
+    public int maxSumSubmatrix(int[][] matrix, int k) {
+        int row = matrix.length;
+        int column = matrix[0].length;
+         int[][] prefix = new int[row][column];
+        for(int i  = 0;i<row;i++)
+        {
+            prefix[i][0] = matrix[i][0];
+            for(int j=1;j<column;j++)
+            {
+                prefix[i][j] = prefix[i][j-1] + matrix[i][j];
+            }
+        }
+        int sum = Integer.MIN_VALUE;
+        Solution obj = new Solution();
+        for(int i =0;i<row;i++)
+        {
+            for(int j = 0;j<column;j++)
+            {
+                for(int m = i;m<row;m++)
+                {
+                    for(int l = j;l<column;l++)
+                    {
+                        int currentSum = obj.sum(i,j,m,l,prefix);
+                        if(sum<currentSum && currentSum<= k)
+                        {
+                            sum = currentSum;
+                        }
+                    }
+                }
+            }
+        }
+        return sum;
+        
+    }
+    public int sum(int row1, int col1, int row2, int col2,int[][] prefix)
+    {
+        int sum =0;
+        if(col1==0)
+        {
+            for(int i = row1;i<=row2;i++)
+            {
+                sum += prefix[i][col2];
+            }
+            return sum;
+        }
+        for(int i =row1;i<=row2;i++)
+        {
+            sum += prefix[i][col2] - prefix[i][col1-1];
+        }
+        return sum;
+        
+    }
+}
+class Solution {
+
+    public int maxSumSubmatrix(int[][] matrix, int k) {
+
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+
+        // Build 2D Prefix Sum
+        int[][] prefix = new int[rows + 1][cols + 1];
+
+        for (int i = 1; i <= rows; i++) {
+            for (int j = 1; j <= cols; j++) {
+                prefix[i][j] = matrix[i - 1][j - 1]
+                             + prefix[i - 1][j]
+                             + prefix[i][j - 1]
+                             - prefix[i - 1][j - 1];
+            }
+        }
+
+        int ans = Integer.MIN_VALUE;
+
+        // Try all possible rectangles
+        for (int r1 = 0; r1 < rows; r1++) {
+            for (int c1 = 0; c1 < cols; c1++) {
+                for (int r2 = r1; r2 < rows; r2++) {
+                    for (int c2 = c1; c2 < cols; c2++) {
+
+                        int sum = getSum(r1, c1, r2, c2, prefix);
+
+                        if (sum <= k) {
+                            ans = Math.max(ans, sum);
+                        }
+                    }
+                }
+            }
+        }
+
+        return ans;
+    }
+
+    private int getSum(int r1, int c1,
+                       int r2, int c2,
+                       int[][] prefix) {
+
+        return prefix[r2 + 1][c2 + 1]
+             - prefix[r1][c2 + 1]
+             - prefix[r2 + 1][c1]
+             + prefix[r1][c1];
+    }
+}
