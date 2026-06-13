@@ -1,0 +1,29 @@
+class Solution {
+    public String mapWordWeights(String[] words, int[] weights) {
+        Map<Integer,Character> mp = new HashMap<>();
+        Map<Character,Integer> mp1 = new HashMap<>();
+        int x = 122;
+        int p = 97;
+        String result = "";
+        for(int i =0;i<26;i++)
+        {
+            mp.put(i,(char)x);
+            mp1.put((char)p,weights[i]);
+            x--;
+            p++;
+        }
+        int sum =0;
+        int k =0;
+        for(int i = 0;i<words.length;i++)
+        {   sum =0;
+            for(int j =0;j<words[i].length();j++)
+            {
+                
+                sum += mp1.get(words[i].charAt(j));
+            }
+            sum = sum%26;
+            result += mp.get(sum);
+        }
+        return result;
+    }
+}
