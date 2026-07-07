@@ -1,0 +1,40 @@
+// brute force
+class Solution {
+    public int[] nextGreaterElements(int[] nums) {
+        
+        int[] result = new int[nums.length];
+        Arrays.fill(result,-1);
+        int n = nums.length;
+        for(int i =0;i<nums.length;i++)
+        {
+            for(int j = i+1;j<2*nums.length;j++)
+            {
+                if( nums[i]<nums[j%n] )
+                {
+                    result[i] = nums[j%n];
+                    break; 
+                }
+            }
+        }
+        return result;
+    }
+}
+//O(n) using monotonic decreasing stack
+class Solution {
+    public int[] nextGreaterElements(int[] nums) {
+        int size = nums.length;
+        int[] result = new int[nums.length];
+        Arrays.fill(result,-1);
+        Stack<Integer> st = new Stack<>();
+        for(int i =0;i<2*size;i++)
+        {
+                while(!st.empty()&&nums[st.peek()]<nums[i%size])
+                {
+                    result[st.peek()] = nums[i%size];
+                    st.pop();
+                }
+            st.push(i%size);
+        }
+        return result;
+    }
+}
