@@ -1,40 +1,40 @@
+//O(n)
 class Solution {
     public int trap(int[] height) {
-        int result=0;
-        int Lmax=0;
-        int Rmax=0;
-        int start=0;
-        int end= height.length-1;
-        while(start<end)
+        int size = height.length;
+        int[] leftMax = new int[size];
+        int[] rightMax = new int[size];
+        int currentMax = 0;
+//for left max
+        for(int i =0;i<size;i++)  
         {
-            if (height[start]<=height[end])
+            if(currentMax<height[i])
             {
-                if(Lmax>=height[start])
-                {
-                    result=result+(Lmax-height[start]);
-                    start++;
-                }
-                else{
-                    Lmax=height[start];
-                    start++;
-                }
+                currentMax = height[i];
+                leftMax[i] = currentMax;
             }
             else{
-                
-                if(Rmax>=height[end])
-                {
-                    result=result+(Rmax-height[end]);
-                    end--;
-                }
-                else{
-                    Rmax=height[end];
-                    end--;
-                }
-                
+                leftMax[i] = currentMax;
             }
         }
+        currentMax = 0;
+ //for rigth max
+        for(int i =size-1;i>=0;i--)
+        {
+            if(currentMax<height[i])
+            {
+                currentMax = height[i];
+                rightMax[i] = currentMax;
+            }
+            else{
+                rightMax[i] = currentMax;
+            }
+        }
+        int result = 0;
+        for(int i =0;i<size;i++)
+        {
+            result +=Math.min(leftMax[i],rightMax[i]) - height[i];
+        }
         return result;
-
-        
     }
 }
