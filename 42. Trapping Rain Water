@@ -38,3 +38,41 @@ class Solution {
         return result;
     }
 }
+
+//using single stack
+class Pair{
+    int a;
+    int b ;
+    Pair(int a, int b)
+    {
+        this.a = a;
+        this.b = b;
+    }
+}
+class Solution {
+
+    public int trap(int[] height) {
+        Stack<Pair> st = new Stack<>();
+        int leftMax = 0;
+        for(int i =0;i<height.length;i++)
+        {
+            if(leftMax < height[i])
+            {
+                leftMax = height[i];
+            }
+            st.push(new Pair(height[i],leftMax));
+        }
+        int result =0;
+        int rightMax = 0;
+        for(int  i =0;i<height.length;i++)
+        {
+            if(rightMax<st.peek().a)
+            {
+                rightMax = st.peek().a;
+            }
+            result +=Math.min(rightMax,st.peek().b) - height[i];
+            st.pop();
+        }
+        return result;
+    }
+}
