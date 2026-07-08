@@ -1,0 +1,43 @@
+//using monotonic stack but it use O(n^3) space complexity
+// time complexity O(n)
+class Solution {
+    public int largestRectangleArea(int[] height) {
+        int size = height.length;
+        int[] rightSmaller = new int[size];
+        Arrays.fill(rightSmaller,size);
+        int[] leftSmaller = new int[size];
+        Arrays.fill(leftSmaller,-1);
+        Stack<Integer> st = new Stack<>();
+        if(height.length==1)
+        {
+            return height[0];
+        }
+        for(int i =0;i<size;i++)
+        {
+            while(!st.isEmpty() && height[st.peek()]>height[i])
+            {
+                rightSmaller[st.peek()] =i;
+                st.pop();
+            }
+            st.push(i);
+        }
+        while(!st.empty()){
+            st.pop();
+        }
+        for(int i =size-1;i>=0;i--)
+        {
+            while(!st.isEmpty() && height[st.peek()]>height[i])
+            {
+                leftSmaller[st.peek()] = i;
+                st.pop();
+            }
+            st.push(i);
+        }
+        int largestArea = 0;
+        for(int i =0;i<size;i++)
+        {
+            largestArea = Math.max(largestArea,(rightSmaller[i]-leftSmaller[i]-1)*height[i]);
+        }
+        return largestArea;
+    }
+}
