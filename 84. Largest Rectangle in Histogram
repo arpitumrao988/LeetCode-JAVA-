@@ -41,3 +41,44 @@ class Solution {
         return largestArea;
     }
 }
+
+//another solution : in this solution we use only stack not any extra array storage to store next smaller and previous smaller
+
+class Solution {
+    public int largestRectangleArea(int[] height) {
+        int size = height.length;
+        Stack<Integer> st = new Stack<>();
+        int next = size;
+        int previous = -1;
+        int result = 0;
+        int t =0;
+          for(int i =0;i<size;i++) {
+             while(!st.isEmpty() && height[st.peek()]>height[i])
+            {
+                next = i;
+                previous = -1;
+                 t =st.pop();
+                if(!st.isEmpty())
+                {
+                    previous = st.peek();
+                }
+                 result = Math.max(result,(next-previous-1)*height[t]);
+            }
+            st.push(i);
+            }
+            next = size;
+//calculation in remaining stack
+            while(!st.isEmpty())
+            {
+                 t = st.pop();
+                previous = -1;
+                if(!st.isEmpty())
+                {
+                    previous = st.peek();
+                }
+               result = Math.max(result,(next-previous-1)*height[t]);
+            }
+        
+        return result;
+    }
+}
