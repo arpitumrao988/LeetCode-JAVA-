@@ -1,0 +1,33 @@
+//brute force O(nk) give TLE
+class Solution {
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+       int size = nums.length;
+        for(int i =0;i<size ;i++)
+        {
+            for(int j =i+1;j<Math.min(i+k+1,size);j++)
+            {
+                if(nums[i]== nums[j])
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}
+// using hashmap O(n)
+class Solution {
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+        int size = nums.length;
+        HashMap<Integer,Integer> mp = new HashMap<>();
+        for(int i =0;i<size;i++)
+        {
+            if(mp.containsKey(nums[i]) && (i-mp.get(nums[i]))<=k)
+            {
+                return true;
+            }
+            mp.put(nums[i],i);
+        }
+        return false;
+    }
+}
