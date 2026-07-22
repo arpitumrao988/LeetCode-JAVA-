@@ -1,0 +1,34 @@
+class Solution {
+    public int longestOnes(int[] nums, int k) {
+        List<Integer> ls  =new ArrayList<>();
+        int index = -1;
+        int size = nums.length;
+        
+        int  p =0;
+        while(p<size && nums[p]!=0)
+        {
+            p++;
+        }
+        ls.add(p-index-1);
+        index = p;
+        int m =1;
+        for(int i =p+1;i<=size;i++)
+        {
+            if(i == size || nums[i] == 0)
+            {
+                ls.add(ls.get(m-1)+(i-index-1));
+                index = i;
+                m++;
+            }
+        }
+        if(k >=ls.size())k =ls.size()-1 ;
+        int max = ls.get(k)+k;
+        for(int i =1;i<ls.size()-k;i++)
+        {
+            max = Math.max(max,ls.get(i+k)-ls.get(i-1)+k);
+        }
+            return max;
+        
+    }
+
+}
