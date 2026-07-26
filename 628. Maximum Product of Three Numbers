@@ -1,0 +1,68 @@
+//brute force O(n^3)
+class Solution {
+    public int maximumProduct(int[] nums) {
+        int max  =Integer.MIN_VALUE;;
+        int size = nums.length;
+        for( int i =0;i<size-2;i++)
+        {
+            for(int j =i+1;j<size -1;j++)
+            {
+                for(int k = j+1;k<size;k++)
+                {
+                    max = Math.max(max,nums[i]*nums[j]*nums[k]);
+                }
+            }
+        }
+        return max;
+    }
+}
+
+
+
+//O(nlogn)
+class Solution {
+    public int maximumProduct(int[] nums) {
+        Arrays.sort(nums);
+        int size = nums.length;
+        return Math.max(nums[size-3]*nums[size-2]*nums[size-1],nums[0]*nums[1]*nums[size-1]);
+    }
+}
+
+
+
+//O(n)
+class Solution {
+    public int maximumProduct(int[] nums) {
+       int mx1 = Integer.MIN_VALUE;
+       int mx2 = Integer.MIN_VALUE; 
+       int mx3 = Integer.MIN_VALUE;
+       int mn1 = Integer.MAX_VALUE;
+       int mn2 = Integer.MAX_VALUE;
+       for(int num: nums)
+       {
+        if(num>mx1)
+        {
+            mx3 = mx2;
+            mx2 = mx1;
+            mx1 = num;
+        }else if(num > mx2)
+        {
+            mx3 = mx2;
+            mx2 = num;
+        }else if(num> mx3)
+        {
+            mx3 = num;
+        }
+
+        if(num<mn1)
+        {
+            mn2 = mn1;
+            mn1 = num;
+        }else if(num< mn2)
+        {
+            mn2 = num;
+        }
+       }
+       return Math.max(mx1*mx2*mx3,mx1*mn1*mn2);
+    }
+}
