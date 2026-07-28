@@ -1,0 +1,25 @@
+class Solution {
+    public String smallestPalindrome(String s) {
+        int l = s.length();
+        if(l%2 == 0)
+        {
+            s = s.substring(0,l/2);
+            char[] arr = s.toCharArray();
+            Arrays.sort(arr);
+            s= String.valueOf(arr);
+            String reversed = new StringBuilder(s).reverse().toString();
+            return s+reversed;
+        }
+        char ch = s.charAt(l/2);
+        s = s.substring(0,l/2);
+        
+            char[] arr = s.toCharArray();
+            Arrays.sort(arr);
+            s= String.valueOf(arr);
+
+            String reversed = new StringBuilder(s.substring(0,l/2)).reverse().toString();
+            System.out.println(s);
+            return s+ch+reversed;
+
+    }
+}
