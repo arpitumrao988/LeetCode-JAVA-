@@ -1,0 +1,32 @@
+class Solution {
+    public int countStudents(int[] students, int[] sandwiches) {
+       Stack<Integer> st = new Stack<>();
+       Queue<Integer> qe = new ArrayDeque<>();
+
+       for(int i = sandwiches.length-1;i>=0;i--)
+       {
+        st.push(sandwiches[i]);
+    
+       }
+       for(int i =0;i<students.length;i++) 
+       {
+        qe.add(students[i]);
+       }
+       int count = 0;
+       while(!st.isEmpty())
+       {
+        if(st.peek() == qe.element())
+        {
+            st.pop();
+            qe.poll();
+            count = 0;
+        }else{
+            qe.add(qe.poll());
+             count ++;
+        }
+        if(count == qe.size()) return count;
+       }
+       System.out.println(count);
+        return 0;
+    }
+}
