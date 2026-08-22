@@ -1,0 +1,8 @@
+class Solution {
+    public boolean isUnivalTree(TreeNode root) {
+        if(root == null) return true;
+        boolean left = isUnivalTree(root.left);
+        boolean right = isUnivalTree(root.right);
+        return (left && right)&&(root.left == null || root.left.val == root.val)&&(root.right == null || root.right.val == root.val);
+    }
+}
