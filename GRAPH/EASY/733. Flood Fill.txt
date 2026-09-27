@@ -1,0 +1,43 @@
+class Pair{
+    int r;
+    int c;
+    public Pair(int r, int c)
+    {
+        this.r = r;
+        this.c = c;
+    }
+}
+class Solution {
+    public int[][] floodFill(int[][] image, int sr, int sc, int color) {
+        int first_color = image[sr][sc];
+        if(first_color == color)
+        return image;
+        int[][] directions = {
+            {1,0},{-1,0},{0,1},{0,-1}
+        };
+        int m = image.length;
+        int n = image[0].length;
+        
+        Queue<Pair>q1 = new LinkedList<>();
+        q1.offer(new Pair(sr,sc));
+        image[sr][sc] = color;
+        while(!q1.isEmpty())
+        {
+            Pair temp = q1.poll();
+            int r = temp.r;
+            int c = temp.c;
+            for(int i =0;i<4;i++)
+            {
+                int new_r = r + directions[i][0];
+                int new_c = c + directions[i][1];
+                if( new_r>=0 && new_c>=0 && new_r<m && new_c<n && image[new_r][new_c]==first_color)
+                {
+                    image[new_r][new_c] = color;
+                    q1.offer(new Pair(new_r,new_c));
+                }
+            }
+        }
+        return image;
+
+    }
+}
