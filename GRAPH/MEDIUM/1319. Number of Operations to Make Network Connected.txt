@@ -1,0 +1,83 @@
+// using adjmatrix but it gives TLE
+class Solution1 {
+    public int makeConnected(int n, int[][] connections) {
+        int to_edges = connections.length;
+        if(to_edges<n-1)return -1;
+        int[][] adjMatrix = new int[n][n];
+        for(int[] i : adjMatrix){
+        Arrays.fill(i,0);}
+        for(int[] i : connections)
+        {
+            adjMatrix[i[0]][i[1]] =1 ;
+            adjMatrix[i[1]][i[0]] = 1;
+        }
+        int componant = 0;
+        int[] visit = new int[n];
+        Arrays.fill(visit,0);
+        for(int i =0;i<n;i++)
+        {
+            if(visit[i]== 0)
+            {
+                componant++;
+                Queue<Integer>q1 = new LinkedList<>();
+                q1.offer(i);
+                visit[i] = 1;
+                while(!q1.isEmpty())
+                {
+                    int x = q1.poll();
+                    for(int j =0;j<n;j++)
+                    {
+                        if(adjMatrix[x][j]==1 && visit[j]==0){
+                        visit[j] = 1;
+                        q1.offer(j);}
+                    }
+                }
+
+            }
+        }
+        return componant-1;
+    }
+}
+// we done it by adjList 
+class Solution {
+    public int makeConnected(int n, int[][] connections) {
+        int to_edges = connections.length;
+        if(to_edges<n-1)return -1;
+        ArrayList<Integer>[] adjList = new ArrayList[n];
+        for(int i = 0;i<n;i++)
+        {
+            adjList[i] = new ArrayList<>();
+        }
+        for(int[] i: connections)
+        {
+            adjList[i[0]].add(i[1]);
+            adjList[i[1]].add(i[0]);
+        }
+
+        int componant = 0;
+        int[] visit = new int[n];
+        Arrays.fill(visit,0);
+        for(int i =0;i<n;i++)
+        {
+            if(visit[i]== 0)
+            {
+                componant++;
+                Queue<Integer>q1 = new LinkedList<>();
+                q1.offer(i);
+                visit[i] = 1;
+                while(!q1.isEmpty())
+                {
+                    int x = q1.poll();
+                    for(int j =0;j<adjList[x].size();j++)
+                    {
+                        if(visit[adjList[x].get(j)]==0){
+                        visit[adjList[x].get(j)] = 1;
+                        q1.offer(adjList[x].get(j));}
+                    }
+                }
+
+            }
+        }
+        return componant-1;
+    }
+}
