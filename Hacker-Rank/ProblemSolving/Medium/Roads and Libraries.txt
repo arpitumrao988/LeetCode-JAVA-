@@ -1,0 +1,61 @@
+// here we make a concept like if or c_lib < c_road then we can get minimum cost bby stablish library in every city and main problem occurs when c_road < c_lib in this //case we get minimum by stablish one library and connect all cities by road (which is total vertex -1 ) in each component. so in this case total min cost = (total no of //vertex on component -1 )*c_road + 1*c_lib, we have to find for each component so we have concept , for total no of min edge in a grapg having n vertex and k components = //n - k
+class Result {
+
+    /*
+     * Complete the 'roadsAndLibraries' function below.
+     *
+     * The function is expected to return a LONG_INTEGER.
+     * The function accepts following parameters:
+     *  1. INTEGER n
+     *  2. INTEGER c_lib
+     *  3. INTEGER c_road
+     *  4. 2D_INTEGER_ARRAY cities
+     */
+
+    public static long roadsAndLibraries(int n, int c_lib, int c_road, List<List<Integer>> cities) {
+    // Write your code here
+    long totalCost = 0;
+        if(c_lib<c_road)return (long)n*c_lib;
+        else{
+            int[] visit = new int[n+1];
+            Arrays.fill(visit,0);
+            visit[0] = 1;
+            ArrayList<Integer>[] adjList = new ArrayList[n+1];
+            for(int i =0;i<n+1;i++)
+            {
+                adjList[i] = new ArrayList<>();
+            }
+            for(List<Integer> ls:cities)
+            {
+                adjList[ls.get(0)].add(ls.get(1));
+                adjList[ls.get(1)].add(ls.get(0));
+            }
+            int componant = 0;
+            for(int i =1;i<=n;i++)
+            {
+                if(visit[i] == 0)
+                {
+                    componant++;
+                    Queue<Integer>q1 = new LinkedList<>();
+                    q1.offer(i);
+                    visit[i] = 1;
+                    while(!q1.isEmpty())
+                    {
+                        int x = q1.poll();
+                        for(int j =0;j<adjList[x].size();j++)
+                        {
+                            if(visit[adjList[x].get(j)]==0)
+                            {
+                                visit[adjList[x].get(j)] =1;
+                                q1.offer(adjList[x].get(j));
+                            }
+                        }
+                    }
+                }
+            }
+             totalCost = (long)(n-componant)*c_road +(long)componant*c_lib;
+        }
+        return totalCost;
+    }
+
+}
