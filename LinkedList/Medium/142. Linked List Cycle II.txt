@@ -1,0 +1,40 @@
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+ //time complexity O(size of linkedList) 
+ // spaceComplexity O(size of linkedList)
+public class Solution1 {
+    public ListNode detectCycle(ListNode head) {
+      HashMap<ListNode,Integer>mp = new HashMap<>();
+      ListNode pos = new ListNode(-1);
+      
+        ListNode temp = head;
+        int index = 0;
+   …plexity O(1)
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+        while(fast !=  null && fast.next!=null )
+        {
+            slow = slow.next;
+            fast = fast.next.next;
+            if(fast==slow)break;
+        }
+        if(fast==null || fast.next==null)return null;
+        while(head!=slow)
+        {
+            head= head.next;
+            slow = slow.next;
+        }
+        return head;
+    }
+}

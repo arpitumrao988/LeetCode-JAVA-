@@ -1,0 +1,64 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        //case1 : if both position is same the no change return direct head
+        if(left==right)return head;
+        ListNode start = null;
+        ListNode end = null;
+        ListNode temp = head;
+        ListNode prev = null;
+        ListNode nextNode = null;
+        int count = 1;
+        //case2 : if left and right position lying between the first and last node then
+        //here we find out first and last link
+        while(temp!=null)
+        {
+            if(count+1==left){
+                prev = temp;
+            }
+            if(count == left)
+            {
+                start = temp;
+            }
+            if(count == right ){
+                end = temp;
+                nextNode = temp.next;
+                break;
+            }
+            temp = temp.next;
+            count++;
+        }
+        ListNode newHead = new ListNode();
+        ListNode last = reverseList(start,end,newHead);
+        //that is the condition for when left <> 1
+        if(prev!=null){
+        prev.next = newHead.next;}
+        last.next = nextNode;
+         //case3
+        // if left = 1 then we directly return newhead
+        if(prev==null)return newHead.next;
+        return head;
+
+    }
+    public ListNode reverseList(ListNode start, ListNode end,ListNode newHead){
+        if(start==end){
+            newHead.next = start;
+            return start;
+        }
+        ListNode temp = reverseList(start.next,end,newHead);
+        start.next = null;
+        temp.next = start;
+        return start;
+    }
+}
+    
+    

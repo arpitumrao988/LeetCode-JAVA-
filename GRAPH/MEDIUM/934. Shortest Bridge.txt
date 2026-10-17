@@ -1,0 +1,60 @@
+class Solution {
+    public int shortestBridge(int[][] grid) {
+        int count = 0;
+        int n = grid.length;
+      int[][] directions = {{1,0},{-1,0},{0,1},{0,-1}};
+      Queue<int[]> temp = new ArrayDeque<>();
+      for(int i = 0;i<n;i++){
+        for(int j = 0;j<n;j++)
+        {
+            Queue<int[]>q1 =new ArrayDeque<>();
+            if(grid[i][j]==1)
+            {
+                q1.offer(new int[] {i,j});
+                temp.offer(new int[] {i,j});
+                grid[i][j] = 2;
+                while(!q1.isEmpty())
+                {
+                    int[] temp1 = q1.poll();
+                    for(int k = 0;k<4;k++)
+                    {
+                        int new_r = temp1[0]+directions[k][0];
+                        int new_c = temp1[1]+directions[k][1];
+                        if(new_r>=0 && new_r<n && new_c >=0 && new_c < n && grid[new_r][new_c]==1)
+                        {
+                            q1.offer(new int[]{new_r,new_c});
+                            temp.offer(new int[]{new_r,new_c});
+                            grid[new_r][new_c] = 2;
+                        }
+                    }
+                }
+                break;
+            } 
+        }
+        if(!temp.isEmpty()) break;
+        
+      }
+       while(!temp.isEmpty())
+            {
+                int size = temp.size();
+                for(int m = 0;m<size;m++){
+                        int[] temp2 = temp.poll();
+                        for(int l = 0;l<4;l++)
+                        {
+                            int new_r = temp2[0]+directions[l][0];
+                            int new_c = temp2[1]+directions[l][1];
+                            if(new_r>=0 && new_r<n && new_c >=0 && new_c < n && grid[new_r][new_c]==0)
+                            {
+                                temp.offer(new int[] {new_r,new_c});
+                                grid[new_r][new_c] = 2;
+                            }else if(new_r>=0 && new_r<n && new_c >=0 && new_c < n && grid[new_r][new_c]==1)
+                            {
+                                return count;
+                            }
+                        }
+                    }
+                    count++;
+            } 
+            return count;
+    }
+}
