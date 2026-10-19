@@ -1,0 +1,49 @@
+class Solution {
+    public int orangesRotting(int[][] grid) {
+        int freshOrange = 0;
+        int m = grid.length;
+        int n = grid[0].length;
+        int totalMinutes= 0;
+        int[][]directions = {
+            {0,1},{0,-1},{1,0},{-1,0}
+        };
+        Queue<int[]>q1= new ArrayDeque<>();
+        //first we insert all source node in queue
+        for(int i =0;i<m;i++)
+        {
+            for(int j = 0;j<n;j++)
+            {
+                if(grid[i][j]==2)
+                {
+                    q1.offer(new int[] {i,j});
+                }
+                if(grid[i][j]==1)freshOrange++;
+            }
+        }
+        if(freshOrange==0)return 0;
+        while(!q1.isEmpty())
+        {
+            int size = q1.size();
+            totalMinutes++;
+                for(int k = 0;k<size;k++){
+                    int[] temp = q1.poll();
+            
+                        for(int i = 0;i<4;i++)
+                        {
+                            int new_r = temp[0]+directions[i][0];
+                            int new_c = temp[1]+directions[i][1];
+                            if(new_r>=0 && new_r<m && new_c>=0 && new_c<n && grid[new_r][new_c]==1)
+                            {
+                                q1.offer(new int[] {new_r,new_c});
+                                grid[new_r][new_c] = 2;
+                                freshOrange--;
+                            }
+                        }
+                }
+                
+        }
+        //we return totalMinutes-1 because it count initial source as minute 1 but it will be 0
+        if(freshOrange==0)return totalMinutes-1;
+        return -1;
+    }
+}
