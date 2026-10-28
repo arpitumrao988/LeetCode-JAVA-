@@ -1,0 +1,42 @@
+class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+
+        int[] inDegree = new int[numCourses];
+
+        ArrayList<Integer>[] adjList = new ArrayList[numCourses];
+
+        for (int i = 0; i < numCourses; i++) {
+            adjList[i] = new ArrayList<>();
+        }
+
+        for (int[] p : prerequisites) {
+            adjList[p[1]].add(p[0]);
+            inDegree[p[0]]++;
+        }
+
+        Queue<Integer> q1 = new ArrayDeque<>();
+
+        for (int i = 0; i < numCourses; i++) {
+            if (inDegree[i] == 0) {
+                q1.offer(i);
+            }
+        }
+
+        int completed = 0;
+
+        while (!q1.isEmpty()) {
+            int temp = q1.poll();
+            completed++;
+
+            for (int temp2 : adjList[temp]) {
+                inDegree[temp2]--;
+
+                if (inDegree[temp2] == 0) {
+                    q1.offer(temp2);
+                }
+            }
+        }
+
+        return completed == numCourses;
+    }
+}

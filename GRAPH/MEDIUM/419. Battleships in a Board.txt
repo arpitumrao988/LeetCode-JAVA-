@@ -1,0 +1,38 @@
+//419. Battleships in a Board
+class Solution {
+    public int countBattleships(char[][] board) {
+        int m = board.length;
+        int n = board[0].length;
+        int componants = 0;
+        int[][] directions = {
+            {1,0},{-1,0},{0,1},{0,-1}
+        };
+        for(int i = 0;i<m;i++){
+            for(int j = 0;j<n;j++)
+            {
+                if(board[i][j]=='X')
+                {
+                    componants++;
+                    Queue<int[]>q1 = new ArrayDeque<>();
+                    q1.offer(new int[]{i,j});
+                    board[i][j] = '.';
+                    while(!q1.isEmpty())
+                    {
+                        int[] temp = q1.poll();
+                        for(int k = 0;k<4;k++)
+                        {
+                            int new_r = temp[0] +directions[k][0];
+                            int new_c = temp[1] + directions[k][1];
+                            if(new_r>=0 && new_r<m && new_c>=0 && new_c < n &&board[new_r][new_c]=='X'){
+                                q1.offer(new int[] {new_r,new_c});
+                                board[new_r][new_c] = '.';
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return componants;
+        
+    }
+}

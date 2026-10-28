@@ -1,0 +1,64 @@
+//322. Coin Change
+
+class Solution1 {
+    public int coinChange(int[] coins, int amount) {
+        int n = coins.length;
+        int result =  helper(coins,amount,0,0);
+        if(result == Integer.MAX_VALUE)return -1;
+        return result;
+    }
+    public int helper(int[] coins, int amount, long k, int count)
+    {
+        if(k == amount)
+        {
+            return count;
+        }
+        
+        if(k>amount)return Integer.MAX_VALUE;
+        int ans = Integer.MAX_VALUE;
+        for(int p = 0;p<coins.length;p++)
+        {
+            ans = Math.min(ans,helper(coins,amount,k+coins[p],count+1));
+        }
+        
+        return ans;
+    }
+}
+//tabulation 
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        if(amount == 0)return 0;
+        if(coins.length==0 && amount>0)return -1;
+
+        int[][] dp = new int[coins.length][amount+1];
+        for(int[] i: dp)
+        {
+            Arrays.fill(i,0);
+        }
+        for(int i = 0;i<amount+1;i++)
+        {
+            if(i%coins[0]==0){
+            dp[0][i] = i/coins[0];
+            }
+            else{
+                dp[0][i] = Integer.MAX_VALUE;
+            }
+        }
+        int n = coins.length;
+        
+        for(int i = 1;i<n;i++)
+        {
+            for(int j = 1;j<amount+1;j++)
+            {
+                if(j<coins[i])dp[i][j] = dp[i-1][j];else{
+                    int take = Integer.MAX_VALUE;
+                    if (dp[i][j - coins[i]] != Integer.MAX_VALUE) {
+                        take = dp[i][j - coins[i]] + 1;
+                    }
+                    dp[i][j] = Math.min(dp[i-1][j],take);
+                }
+            }
+        }
+        return dp[n-1][amount]==Integer.MAX_VALUE?-1:dp[n-1][amount];
+    }
+}

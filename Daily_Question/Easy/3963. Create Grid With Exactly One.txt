@@ -1,0 +1,69 @@
+//3963. Create Grid With Exactly One Path
+class Solution1 {
+    public String[] createGrid(int m, int n) {
+        char[][] temp = new char[m][n];
+        for(int i = 0;i<m;i++)
+        {
+            for(int j = 0;j<n;j++)
+            {
+                if(i==0||j==n-1)temp[i][j]='.';
+                else temp[i][j] = '#';                
+            }
+        }
+        String[] result = new String[m];
+    //    String temp2 = "";
+        for(int i = 0;i<m;i++)
+        {
+            result[i] = new String(temp[i]);
+            // for(int j = 0;j<n;j++)
+            // {
+            //     temp2 +=temp[i][j];
+            // }
+            // result[i] = temp2;
+            // temp2 = "";
+        }
+        return result;
+    }
+}
+
+class Solution2 {
+    public String[] createGrid(int m, int n) {
+        String[] result = new String[m];
+        String temp = "";
+        for(int i = 0;i<m;i++)
+        {
+            for(int j = 0;j<n;j++)
+            {
+                if(i==0||j == n-1)temp += '.';
+                else{
+                    temp+='#';
+                }
+            }
+            result[i] = temp;
+            temp = "";
+        }
+        return result;
+    }
+}
+
+class Solution3 {
+    public String[] createGrid(int m, int n) {
+        String temp1 = "";
+        String temp2 = "";
+        for(int i = 0;i<n;i++)
+        {
+            if(i == n-1)temp2 += '.';
+            else{
+                temp2 +='#';
+            }
+            temp1 +='.';
+        }
+        String[] result = new String[m];
+        result[0] = temp1;
+        for(int i = 1;i<m;i++)
+        {
+            result[i] = temp2;
+        }
+        return result;
+    }
+}
